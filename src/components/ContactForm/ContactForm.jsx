@@ -3,8 +3,10 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup'; // Додайте цей імпорт
 import { nanoid } from 'nanoid';
 import css from "../ContactForm/ContactForm.module.css"
+import { useDispatch } from 'react-redux';
+import { addContact } from '../../redux/contactsSlice'
 
-const ContactForm = ({ onSubmit }) => {
+const ContactForm = () => {
   const initialValues = {
     name: '',
     number: ''
@@ -21,24 +23,24 @@ const validationSchema = Yup.object({
     .max(50, 'Too long')
     .matches(/^[0-9]/, 'Must be only digits'),
 });
-
+  const dispatch = useDispatch();
   const handleSubmit = (values, { resetForm }) => {
     const newContact = {
       id: nanoid(),
       name: values.name,
       number: values.number
     };
-    onSubmit(newContact);
+    dispatch(addContact(newContact));
     resetForm();
   };
-
+  
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      <Form className={css.conactFormContainer}>
+      <Form  className={css.conactFormContainer}>
           <label>
             <span>Name</span>
           <br />

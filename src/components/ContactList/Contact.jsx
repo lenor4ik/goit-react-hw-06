@@ -1,14 +1,16 @@
+import { useDispatch } from "react-redux";
+import { deleteContact } from "../../redux/contactsSlice";
 import css from "../ContactList/Contact.module.css"
 import phone from "../ContactList/PNG/phone.png"
 import user from "../ContactList/PNG/user.png"
 
-const Contact = ({ contact, onDelete }) => {
+const Contact = ({ contact }) => {
   const { id, name, number } = contact;
-
-    const handleDelete = () => {
-    onDelete(id);
+  const dispatch = useDispatch();
+  const handleDelete = () => {
+  dispatch(deleteContact(id));
   };
-  
+
   return (
     <div>
       <li className={css.cartUser}>
